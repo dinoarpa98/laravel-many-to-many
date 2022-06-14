@@ -9,6 +9,9 @@ use App\Models\Category;
 use App\Models\Tag;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendNewEmail;
 
 class PostController extends Controller
 {
@@ -45,6 +48,7 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
+        $user = Auth::user();
        
         // dd($data);
        
@@ -60,6 +64,10 @@ class PostController extends Controller
         $post->save();
 
         if ( array_key_exists( 'tags', $data ) )  $post->tags()->attach($data['tags']);
+
+        // invio email
+        $mail = new SendNewEmail($post);
+        Mail::to($user->email)->send($mail);
 
         return redirect()->route('admin.posts.index');
     }
