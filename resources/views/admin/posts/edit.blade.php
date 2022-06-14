@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <form action=" {{route('admin.posts.update', $post->id)}}" method="POST">
+    <form action=" {{route('admin.posts.update', $post->id)}}" method="POST" enctype="multipart/form-data">
         @method('PUT')
         @csrf
         <div class="form-group">
@@ -29,11 +29,13 @@
                 placeholder="Scrivi il contenuto del post">
             {{ old('content', $post->content)  }}
             </textarea>
+       
         </div>
-        <div class="form-group">
+            <div class="form-group">
             <label for="image">Immagine del post</label>
-            <input type="url" class="form-control" id="image" placeholder="url dell'immagine" name="image" value="{{ old('image', $post->image) }}">
+            <input type="file" class="form-control-file" id="image" placeholder="scegli immagine" name="image">
         </div>
+
 
         <hr>
         <h3>Seleziona tags:</h3>

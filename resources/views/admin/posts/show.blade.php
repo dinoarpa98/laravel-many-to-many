@@ -2,7 +2,9 @@
 
 @section('content')
 <div class="container">
-    <img src="{{ $post->image }}" alt="$post->title" width="50%">
+    {{-- storage/post_images/nome_file --}}
+    
+    <img src="{{asset("storage/$post->image")}}" alt="$post->title" width="50%">
     <h2>{{ $post->title }}</h2>
     @if( $post->category )
     <span class="badge badge-pill badge-{{$post->Category->color}}">{{ $post->Category->label}}</span>
